@@ -13,29 +13,44 @@ struct NavBar: View {
         TabView{
            Home()
                 .tabItem{
-                    
-                    Text("City")
+                    Label{
+                        Text("City")
+                    } icon: {
+                        Image(systemName: "magnifyingglass")
+                    }
                 }
             CurrentWeatherView()
                 .tabItem {
-                    
-                    Text("WeatherNow")
+                    Label{
+                        Text("Weather Now")
+                    } icon: {
+                        Image(systemName: "sun.max.fill")
+                    }
                 }
             
             HourlyView()
                 .tabItem{
-                    
-                    Text("HourlyView")
+                    Label{
+                        Text("Hourly")
+                    } icon: {
+                        Image(systemName: "clock.fill")
+                    }
                 }
             ForecastView()
                 .tabItem {
-                    
-                    Text("ForecastView")
+                    Label{
+                        Text("Forecast")
+                    } icon: {
+                        Image(systemName: "calendar")
+                    }
                 }
             PollutionView()
                 .tabItem {
-                    
-                    Text("PollutionView")
+                    Label{
+                        Text("Pollution")
+                    } icon: {
+                        Image(systemName: "aqi.high")
+                    }
                 }
         }.onAppear {
             UITabBar.appearance().isTranslucent = false
