@@ -30,6 +30,7 @@ struct Home: View {
                 Text("Change Location")
                     .bold()
                     .font(.system(size: 30))
+                    .shadow(color: .white, radius: 1)
             }
             .padding(EdgeInsets(top: 50, leading: 0, bottom: 100, trailing: 0))
             .sheet(isPresented: $isSearchOpen) {
@@ -48,7 +49,6 @@ struct Home: View {
                 let weather = hasWeather ? forecast.current.weather[0] : nil
                 
                 // date section
-                
                 Text(Date(timeIntervalSince1970: TimeInterval(((Int)(forecast.current.dt))))
                         .formatted(.dateTime.year().hour().month().day()))
                 .padding()
@@ -89,6 +89,7 @@ struct Home: View {
                                     image
                                         .resizable()
                                         .frame(width: 80, height: 80)
+                                        .shadow(color: .black, radius: 2)
                                 case .failure:
                                     EmptyView()
                                 @unknown default:
@@ -119,7 +120,7 @@ struct Home: View {
             Image("background2")
             .resizable()
             .scaledToFill()
-            .opacity(0.5)
+            .opacity(0.8)
             .ignoresSafeArea()
         )
     }

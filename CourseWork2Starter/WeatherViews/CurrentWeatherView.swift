@@ -60,6 +60,7 @@ struct CurrentWeatherView: View {
                                     image
                                         .resizable()
                                         .frame(width: 80, height: 80)
+                                        .shadow(color: .black, radius: 2)
                                 case .failure:
                                     EmptyView()
                                 @unknown default:
@@ -137,8 +138,9 @@ struct CurrentWeatherView: View {
                     HStack {
                         Spacer()
                         Image(systemName: "sunrise.fill")
-                            .renderingMode(.original)
                             .resizable()
+                            .renderingMode(.original)
+                            .shadow(color: .black, radius: 2)
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 40)
                         Text(Date(timeIntervalSince1970: TimeInterval(((Int)(dayDetails!.sunrise))))
@@ -149,8 +151,9 @@ struct CurrentWeatherView: View {
                         Spacer()
                         
                         Image(systemName: "sunset.fill")
-                            .renderingMode(.original)
                             .resizable()
+                            .renderingMode(.original)
+                            .shadow(color: .black, radius: 2)
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 40)
                         Text(Date(timeIntervalSince1970: TimeInterval(((Int)(dayDetails!.sunset))))
@@ -178,7 +181,7 @@ struct CurrentWeatherView: View {
             Image("background2")
             .resizable()
             .scaledToFill()
-            .opacity(0.5)
+            .opacity(0.8)
             .ignoresSafeArea()
         )
     }

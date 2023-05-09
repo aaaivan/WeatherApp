@@ -9,33 +9,47 @@ import SwiftUI
 
 struct ForecastView: View {
     @EnvironmentObject var modelData: ModelData
-    @State var locationString: String = "No location"
+    @Binding  var userLocation: String
+
+    let errorMessage = "Someth🌪️ng went wrong!"
+
     var body: some View {
         
-        VStack{Text("This is the ForeCastView that displays daily weather summary for next 7 days with icons as per Figure 4.\n Build this view here")
-                .font(.subheadline)
-                .fontWeight(.semibold)
+        VStack{
+            Text(userLocation)
+                .font(.title)
+                .shadow(color: .black, radius: 0.5)
                 .multilineTextAlignment(.center)
-                .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
 
-            List{
-                ForEach(modelData.forecast!.daily) { day in
-                    DailyView(day: day)
+            // Screen content: to be displayed only if the forecast is available
+            // If the forecast is not available display error message
+            if let forecast = modelData.forecast {
+                List {
+                    ForEach(forecast.daily) { day in
+                        DailyView(day: day)
+                    }
+                    .listRowBackground(Color.white.opacity(0.6))
                 }
+                .scrollContentBackground(.hidden)
+                .background(Color.white.opacity(0.5))
+            }
+            else {
+                Spacer()
+                Text(errorMessage)
+                    .font(.title2)
+                    .shadow(color: .black, radius: 0.5)
+                    .multilineTextAlignment(.center)
+                Spacer()
             }
         }
-
-        .onAppear {
-            Task.init {
-                self.locationString = await getLocFromLatLong(lat: modelData.forecast!.lat, lon: modelData.forecast!.lon)
-               
-            }
-        }
-    }
-}
-
-struct Forecast_Previews: PreviewProvider {
-    static var previews: some View {
-        ForecastView().environmentObject(ModelData())
+        // set background image for the view
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            Image("background2")
+            .resizable()
+            .scaledToFill()
+            .ignoresSafeArea()
+            .opacity(0.8)
+        )
     }
 }

@@ -14,7 +14,6 @@ struct HourlyView: View {
     let errorMessage = "Someth🌪️ng went wrong!"
     
     var body: some View {
-        
         VStack{
             Text(userLocation)
                 .font(.title)
@@ -23,15 +22,15 @@ struct HourlyView: View {
             
             // Screen content: to be displayed only if the forecast is available
             // If the forecast is not available display error message
-            if modelData.forecast != nil {
+            if let forecast = modelData.forecast {
                 List {
-                    ForEach(modelData.forecast!.hourly) { hour in
+                    ForEach(forecast.hourly) { hour in
                         HourCondition(current: hour)
                     }
-                    .listRowBackground(Color.gray.opacity(0.5))
+                    .listRowBackground(Color.white.opacity(0.5))
                 }
                 .scrollContentBackground(.hidden)
-                .background(Color.white.opacity(0.4))
+                .background(Color.white.opacity(0.6))
             }
             else {
                 Spacer()

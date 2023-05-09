@@ -38,7 +38,7 @@ struct NavBar: View {
                         Image(systemName: "clock.fill")
                     }
                 }
-            ForecastView()
+            ForecastView(userLocation: $userLocation)
                 .tabItem {
                     Label{
                         Text("Forecast")

@@ -33,6 +33,7 @@ struct HourCondition: View {
                         image
                             .resizable()
                             .scaledToFit()
+                            .shadow(color: .black, radius: 2)
                     case .failure:
                         EmptyView()
                     @unknown default:
@@ -50,11 +51,11 @@ struct HourCondition: View {
             
             if hasWeather {
                 Text(weather!.weatherDescription.rawValue.capitalized)
-                    .padding(.vertical)
                     .font(.body)
                     .multilineTextAlignment(.trailing)
             }
         }
+        .padding(.vertical)
     }
 }
 
