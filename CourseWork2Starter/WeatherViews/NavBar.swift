@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct NavBar: View {
-    
+    @EnvironmentObject var modelData: ModelData
+    @State  var userLocation: String = "No Location"
+
     var body: some View {
         TabView{
-           Home()
+            Home(userLocation: $userLocation)
                 .tabItem{
                     Label{
                         Text("City")
@@ -19,7 +21,7 @@ struct NavBar: View {
                         Image(systemName: "magnifyingglass")
                     }
                 }
-            CurrentWeatherView()
+            CurrentWeatherView(userLocation: $userLocation)
                 .tabItem {
                     Label{
                         Text("Weather Now")
@@ -52,11 +54,15 @@ struct NavBar: View {
                         Image(systemName: "aqi.high")
                     }
                 }
-        }.onAppear {
-            UITabBar.appearance().isTranslucent = false
         }
-        
+        .onAppear {
+            UITabBar.appearance().isTranslucent = false
+            if let forecast = modelData.forecast {
+                Task.init {
+                    self.userLocation = await getLocFromLatLong(lat: forecast.lat, lon: forecast.lon)
+                }
+            }
+        }
     }
-        
 }
 
