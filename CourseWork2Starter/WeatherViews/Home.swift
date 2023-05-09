@@ -36,26 +36,25 @@ struct Home: View {
                 SearchView(isSearchOpen: $isSearchOpen, userLocation: $userLocation)
             }
             
+            Text(userLocation)
+                .font(.title)
+                .shadow(color: .black, radius: 0.5)
+                .multilineTextAlignment(.center)
+            
             // Screen content: to be displayed only if the forecast is available
             // If the forecast is not available display error message
             if let forecast = modelData.forecast {
                 let hasWeather : Bool = !forecast.current.weather.isEmpty
                 let weather = hasWeather ? forecast.current.weather[0] : nil
                 
-                // location & date section
-                VStack {
-                    Text(userLocation)
-                        .font(.title)
-                        .shadow(color: .black, radius: 0.5)
-                        .multilineTextAlignment(.center)
-                    
-                    Text(Date(timeIntervalSince1970: TimeInterval(((Int)(forecast.current.dt))))
-                            .formatted(.dateTime.year().hour().month().day()))
-                    .padding()
-                    .font(.largeTitle)
-                    .multilineTextAlignment(.center)
-                    .shadow(color: .black, radius: 1)
-                }
+                // date section
+                
+                Text(Date(timeIntervalSince1970: TimeInterval(((Int)(forecast.current.dt))))
+                        .formatted(.dateTime.year().hour().month().day()))
+                .padding()
+                .font(.largeTitle)
+                .multilineTextAlignment(.center)
+                .shadow(color: .black, radius: 1)
                 Spacer()
                 
                 // weather section
@@ -85,6 +84,7 @@ struct Home: View {
                                 switch content {
                                 case .empty:
                                     ProgressView()
+                                        .frame(width: 80, height: 80)
                                 case .success(let image):
                                     image
                                         .resizable()

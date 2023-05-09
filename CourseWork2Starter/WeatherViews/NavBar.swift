@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NavBar: View {
     @EnvironmentObject var modelData: ModelData
-    @State  var userLocation: String = "No Location"
+    @State  var userLocation: String = "No location"
 
     var body: some View {
         TabView{
@@ -30,7 +30,7 @@ struct NavBar: View {
                     }
                 }
             
-            HourlyView()
+            HourlyView(userLocation: $userLocation)
                 .tabItem{
                     Label{
                         Text("Hourly")

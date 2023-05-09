@@ -26,6 +26,12 @@ struct CurrentWeatherView: View {
     
     var body: some View {
         VStack{
+            Text(userLocation)
+                .font(.title)
+                .shadow(color: .black, radius: 0.5)
+                .multilineTextAlignment(.center)
+                .padding(.top, 50)
+
             // Screen content: to be displayed only if the forecast is available
             // If the forecast is not available display error message
             if let forecast = modelData.forecast {
@@ -34,22 +40,12 @@ struct CurrentWeatherView: View {
                 let weather = hasWeather ? forecast.current.weather[0] : nil
                 let dayDetails = hasDaily ? forecast.daily[0] : nil
                 
-                // location & date section
-                VStack {
-                    Text(userLocation)
-                        .font(.title)
-                        .foregroundColor(.black)
-                        .shadow(color: .black, radius: 0.5)
-                        .multilineTextAlignment(.center)
-                }
-                
+                Spacer()
                 // temperature section
                 VStack {
                     // temperature
                     Text(String(format: temperatureString, (Int)(round(forecast.current.temp))))
-                        .padding()
                         .font(.largeTitle)
-                        .foregroundColor(.black)
                         .shadow(color: .black, radius: 1)
                     
                     // icon and description
@@ -59,6 +55,7 @@ struct CurrentWeatherView: View {
                                 switch content {
                                 case .empty:
                                     ProgressView()
+                                        .frame(width: 80, height: 80)
                                 case .success(let image):
                                     image
                                         .resizable()
@@ -126,7 +123,6 @@ struct CurrentWeatherView: View {
                     Text(String(format: humidityString, (Int)(forecast.current.humidity)))
                         .padding()
                         .font(.title3)
-                        .foregroundColor(.black)
                         .shadow(color: .black, radius: 0.5)
                     Spacer()
                     Text(String(format: pressureString, (Int)(forecast.current.pressure)))
@@ -142,6 +138,9 @@ struct CurrentWeatherView: View {
                         Spacer()
                         Image(systemName: "sunrise.fill")
                             .renderingMode(.original)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 40)
                         Text(Date(timeIntervalSince1970: TimeInterval(((Int)(dayDetails!.sunrise))))
                                 .formatted(.dateTime.hour().minute()))
                             .padding(.vertical)
@@ -151,6 +150,9 @@ struct CurrentWeatherView: View {
                         
                         Image(systemName: "sunset.fill")
                             .renderingMode(.original)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 40)
                         Text(Date(timeIntervalSince1970: TimeInterval(((Int)(dayDetails!.sunset))))
                                 .formatted(.dateTime.hour().minute()))
                             .padding(.vertical)
@@ -159,6 +161,7 @@ struct CurrentWeatherView: View {
                         Spacer()
                     }
                 }
+                Spacer()
             }
             else {
                 Spacer()
