@@ -12,8 +12,9 @@ struct HourlyView: View {
     @Binding  var userLocation: String
 
     let errorMessage = "Someth🌪️ng went wrong!"
-
+    
     var body: some View {
+        
         VStack{
             Text(userLocation)
                 .font(.title)
@@ -27,7 +28,10 @@ struct HourlyView: View {
                     ForEach(modelData.forecast!.hourly) { hour in
                         HourCondition(current: hour)
                     }
+                    .listRowBackground(Color.gray.opacity(0.5))
                 }
+                .scrollContentBackground(.hidden)
+                .background(Color.white.opacity(0.4))
             }
             else {
                 Spacer()
@@ -44,8 +48,8 @@ struct HourlyView: View {
             Image("background")
             .resizable()
             .scaledToFill()
-            .opacity(0.5)
             .ignoresSafeArea()
+            .opacity(0.8)
         )
     }
 }
