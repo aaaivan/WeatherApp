@@ -11,18 +11,20 @@ import CoreLocation
 struct SearchView: View {
     @EnvironmentObject var modelData: ModelData
     @EnvironmentObject var pollutionModel: PollutionModel
-
     @Binding var isSearchOpen: Bool
     @State var location = ""
+    @State var invalidLocationFlag = false
     
+    let enterLocationTooltip = "Enter New Location"
+    let invalidLocationText = "Location not found!"
+
     var body: some View {
-        Spacer()
-        ZStack {
-            Color.teal
-                .ignoresSafeArea()
-            
-            VStack{
-                TextField("Enter New Location", text: self.$location, onCommit: {
+        VStack{
+            TextField(enterLocationTooltip, text: self.$location)
+                .onChange(of: location) { newValue in
+                    invalidLocationFlag = false
+                }
+                .onSubmit {
                     CLGeocoder().geocodeAddressString(location) { (placemarks, error) in
                         if let lat = placemarks?.first?.location?.coordinate.latitude,
                            let lon = placemarks?.first?.location?.coordinate.longitude {
@@ -37,22 +39,29 @@ struct SearchView: View {
                             }
                             isSearchOpen.toggle()
                         }
+                        else {
+                            invalidLocationFlag = true
+                        }
                     }//GEOCorder
-                })// TextField
+                }
                 .padding(10)
                 .shadow(color: .blue, radius: 10)
                 .cornerRadius(10)
                 .fixedSize()
                 .font(.custom("Ariel", size: 26))
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                //.background(Color("background"))
                 .cornerRadius(15) // TextField
-                
-            }//VStak
             
-            
-        }// Zstack
-        Spacer()
+            // invalid location message
+            Text(invalidLocationFlag ? invalidLocationText : " ")
+                .font(.title2)
+                .shadow(color: .white, radius: 2)
+                .onAppear {
+                    invalidLocationFlag = false
+                }
+        }//VStak
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.teal, ignoresSafeAreaEdges: .all)
     }// Some
     
 } //View

@@ -15,7 +15,7 @@ class ModelData: ObservableObject {
         
         do {
             let (data, _) = try await session.data(from: url!)
-            print(String(decoding: data, as: UTF8.self))
+            // print(String(decoding: data, as: UTF8.self))
             let forecastData = try JSONDecoder().decode(Forecast.self, from: data)
             DispatchQueue.main.async {
                 self.forecast = forecastData
