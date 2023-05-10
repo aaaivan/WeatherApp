@@ -1,7 +1,7 @@
 import Foundation
 class ModelData: ObservableObject {
     @Published var forecast: Forecast?
-    @Published  var userLocation: String = ""
+    @Published var userLocation: String = "No location"
     
     init() {
         self.forecast = load("london.json")

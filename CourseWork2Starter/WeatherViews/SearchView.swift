@@ -13,7 +13,6 @@ struct SearchView: View {
     
     @Binding var isSearchOpen: Bool
     @State var location = ""
-    @Binding var userLocation: String
     
     var body: some View {
         Spacer()

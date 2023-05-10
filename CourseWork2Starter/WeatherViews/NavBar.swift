@@ -10,11 +10,10 @@ import SwiftUI
 struct NavBar: View {
     @EnvironmentObject var modelData: ModelData
     @StateObject var pollutionModel: PollutionModel = PollutionModel()
-    @State  var userLocation: String = "No location"
 
     var body: some View {
         TabView{
-            Home(userLocation: $userLocation)
+            Home()
                 .tabItem{
                     Label{
                         Text("City")
@@ -22,7 +21,7 @@ struct NavBar: View {
                         Image(systemName: "magnifyingglass")
                     }
                 }
-            CurrentWeatherView(userLocation: $userLocation)
+            CurrentWeatherView()
                 .tabItem {
                     Label{
                         Text("Weather Now")
@@ -31,7 +30,7 @@ struct NavBar: View {
                     }
                 }
             
-            HourlyView(userLocation: $userLocation)
+            HourlyView()
                 .tabItem{
                     Label{
                         Text("Hourly")
@@ -39,7 +38,7 @@ struct NavBar: View {
                         Image(systemName: "clock.fill")
                     }
                 }
-            ForecastView(userLocation: $userLocation)
+            ForecastView()
                 .tabItem {
                     Label{
                         Text("Forecast")
@@ -47,7 +46,7 @@ struct NavBar: View {
                         Image(systemName: "calendar")
                     }
                 }
-            PollutionView(userLocation: $userLocation)
+            PollutionView()
                 .tabItem {
                     Label{
                         Text("Pollution")
@@ -61,7 +60,7 @@ struct NavBar: View {
             UITabBar.appearance().isTranslucent = false
             if let forecast = modelData.forecast {
                 Task.init {
-                    self.userLocation = await getLocFromLatLong(lat: forecast.lat, lon: forecast.lon)
+                    modelData.userLocation = await getLocFromLatLong(lat: forecast.lat, lon: forecast.lon)
                 }
             }
         }

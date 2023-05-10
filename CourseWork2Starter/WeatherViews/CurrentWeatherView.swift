@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CurrentWeatherView: View {
     @EnvironmentObject var modelData: ModelData
-    @Binding  var userLocation: String
 
     let mediumImageURL: String = "https://openweathermap.org/img/wn/%1$@@2x.png"
     let temperatureString = "%dºC"
@@ -24,7 +23,7 @@ struct CurrentWeatherView: View {
     
     var body: some View {
         VStack{
-            Text(userLocation)
+            Text(modelData.userLocation)
                 .font(.title)
                 .shadow(color: .black, radius: 0.5)
                 .multilineTextAlignment(.center)

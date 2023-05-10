@@ -9,14 +9,13 @@ import SwiftUI
 
 struct ForecastView: View {
     @EnvironmentObject var modelData: ModelData
-    @Binding  var userLocation: String
 
     let errorMessage = "Someth🌪️ng went wrong!"
 
     var body: some View {
         
         VStack{
-            Text(userLocation)
+            Text(modelData.userLocation)
                 .font(.title)
                 .shadow(color: .black, radius: 0.5)
                 .multilineTextAlignment(.center)

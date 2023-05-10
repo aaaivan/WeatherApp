@@ -10,7 +10,6 @@ import CoreLocation
 
 struct Home: View {
     @EnvironmentObject var modelData: ModelData
-    @Binding  var userLocation: String
 
     @State var isSearchOpen: Bool = false
     
@@ -30,14 +29,14 @@ struct Home: View {
                 Text("Change Location")
                     .bold()
                     .font(.system(size: 30))
-                    .shadow(color: .white, radius: 1)
+                    .shadow(color: .white, radius: 2)
             }
             .padding(EdgeInsets(top: 50, leading: 0, bottom: 100, trailing: 0))
             .sheet(isPresented: $isSearchOpen) {
-                SearchView(isSearchOpen: $isSearchOpen, userLocation: $userLocation)
+                SearchView(isSearchOpen: $isSearchOpen)
             }
             
-            Text(userLocation)
+            Text(modelData.userLocation)
                 .font(.title)
                 .shadow(color: .black, radius: 0.5)
                 .multilineTextAlignment(.center)

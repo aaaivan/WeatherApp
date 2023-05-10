@@ -49,11 +49,11 @@ func getLocFromLatLong(lat: Double, lon: Double) async -> String
                 }
             }
             
-            return locationString.isEmpty ? "No City" : locationString
+            return locationString.isEmpty ? "No location" : locationString
         }
     } catch {
-        print("Reverse geodecoe fail: \(error.localizedDescription)")
-        locationString = "No City, No Country"
+        print("Reverse geodecoder fail: \(error.localizedDescription)")
+        locationString = "No location"
        
         return locationString
     }

@@ -10,7 +10,6 @@ import SwiftUI
 struct PollutionView: View {
     @EnvironmentObject var modelData: ModelData
     @EnvironmentObject var pollutionModel: PollutionModel
-    @Binding  var userLocation: String
 
     let mediumImageURL: String = "https://openweathermap.org/img/wn/%1$@@2x.png"
     let temperatureString = "%dºC"
@@ -23,7 +22,7 @@ struct PollutionView: View {
 
     var body: some View {
         VStack{
-            Text(userLocation)
+            Text(modelData.userLocation)
                 .font(.title)
                 .shadow(color: .black, radius: 0.5)
                 .multilineTextAlignment(.center)
