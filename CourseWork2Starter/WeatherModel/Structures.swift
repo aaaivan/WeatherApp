@@ -6,7 +6,7 @@
 import Foundation
 
 // MARK: - Forecast
-struct Forecast: Codable, Identifiable {    
+struct Forecast: Codable, Identifiable {
     let id = UUID()
     let lat, lon: Double
     let timezone: String

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NavBar: View {
     @EnvironmentObject var modelData: ModelData
+    @StateObject var pollutionModel: PollutionModel = PollutionModel()
     @State  var userLocation: String = "No location"
 
     var body: some View {
@@ -46,7 +47,7 @@ struct NavBar: View {
                         Image(systemName: "calendar")
                     }
                 }
-            PollutionView()
+            PollutionView(userLocation: $userLocation)
                 .tabItem {
                     Label{
                         Text("Pollution")
@@ -54,6 +55,7 @@ struct NavBar: View {
                         Image(systemName: "aqi.high")
                     }
                 }
+                .environmentObject(pollutionModel)
         }
         .onAppear {
             UITabBar.appearance().isTranslucent = false

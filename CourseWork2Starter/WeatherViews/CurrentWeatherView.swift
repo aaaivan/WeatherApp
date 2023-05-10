@@ -21,8 +21,6 @@ struct CurrentWeatherView: View {
     let windSpeedString = "Wind Speed: %dm/s"
     let windDirString = "Direction: %1$@"
     let errorMessage = "Someth🌪️ng went wrong!"
-    let windDirections = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW","N"]
-    let windAngleIncrement = 360.0 / 16
     
     var body: some View {
         VStack{
@@ -40,7 +38,6 @@ struct CurrentWeatherView: View {
                 let weather = hasWeather ? forecast.current.weather[0] : nil
                 let dayDetails = hasDaily ? forecast.daily[0] : nil
                 
-                Spacer()
                 // temperature section
                 VStack {
                     // temperature
@@ -101,6 +98,8 @@ struct CurrentWeatherView: View {
                         .font(.body)
                         .shadow(color: .black, radius: 0.5)
                 }
+                .padding(.top, 40)
+                Spacer()
                 
                 // wind section
                 HStack {
@@ -110,7 +109,7 @@ struct CurrentWeatherView: View {
                         .font(.title3)
                         .shadow(color: .black, radius: 0.5)
                     Spacer()
-                    Text(String(format: windDirString, WindCompassDirectionFromDegrees(deg: forecast.current.windDeg)))
+                    Text(String(format: windDirString, convertDegToCardinal(deg: forecast.current.windDeg)))
                         .padding()
                         .font(.title3)
                         .shadow(color: .black, radius: 0.5)
@@ -184,20 +183,5 @@ struct CurrentWeatherView: View {
             .opacity(0.8)
             .ignoresSafeArea()
         )
-    }
-    
-    func WindCompassDirectionFromDegrees(deg: Int) -> String {
-        // normalize angle to a value in [0, 360)
-        var angle = Double(deg % 360)
-        angle = angle < 0 ? angle + 360 : angle
-        
-        // match the angle to the compass direction
-        for i in 0..<windDirections.count {
-            let treshholdAngle = (Double)(i) * windAngleIncrement + windAngleIncrement/2
-            if(angle < treshholdAngle) {
-                return windDirections[i]
-            }
-        }
-        return windDirections[0]
     }
 }
