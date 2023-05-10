@@ -21,9 +21,11 @@ struct SearchView: View {
     var body: some View {
         VStack{
             TextField(enterLocationTooltip, text: self.$location)
+                // clear the invalid location error message on change
                 .onChange(of: location) { newValue in
                     invalidLocationFlag = false
                 }
+                // fetch the coordinates of the place enterd, if it exists
                 .onSubmit {
                     CLGeocoder().geocodeAddressString(location) { (placemarks, error) in
                         if let lat = placemarks?.first?.location?.coordinate.latitude,

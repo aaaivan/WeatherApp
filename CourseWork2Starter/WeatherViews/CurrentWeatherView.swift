@@ -47,6 +47,7 @@ struct CurrentWeatherView: View {
                     // icon and description
                     if hasWeather {
                         HStack {
+                            // weather icon fetched asyncronously
                             AsyncImage(url: URL(string: String(format: mediumImageURL, weather!.icon))){ content in
                                 switch content {
                                 case .empty:
@@ -63,6 +64,7 @@ struct CurrentWeatherView: View {
                                     EmptyView()
                                 }
                             }
+                            // weather description
                             Text(weather!.weatherDescription.capitalized)
                                 .padding()
                                 .font(.body)
@@ -135,19 +137,6 @@ struct CurrentWeatherView: View {
                 if hasDaily {
                     HStack {
                         Spacer()
-                        Image(systemName: "sunrise.fill")
-                            .resizable()
-                            .renderingMode(.original)
-                            .shadow(color: .black, radius: 2)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40)
-                        Text(Date(timeIntervalSince1970: TimeInterval(((Int)(dayDetails!.sunrise))))
-                                .formatted(.dateTime.hour().minute()))
-                            .padding(.vertical)
-                            .font(.title3)
-                            .shadow(color: .black, radius: 0.5)
-                        Spacer()
-                        
                         Image(systemName: "sunset.fill")
                             .resizable()
                             .renderingMode(.original)
@@ -160,12 +149,26 @@ struct CurrentWeatherView: View {
                             .font(.title3)
                             .shadow(color: .black, radius: 0.5)
                         Spacer()
+                        
+                        Image(systemName: "sunrise.fill")
+                            .resizable()
+                            .renderingMode(.original)
+                            .shadow(color: .black, radius: 2)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 40)
+                        Text(Date(timeIntervalSince1970: TimeInterval(((Int)(dayDetails!.sunrise))))
+                                .formatted(.dateTime.hour().minute()))
+                            .padding(.vertical)
+                            .font(.title3)
+                            .shadow(color: .black, radius: 0.5)
+                        Spacer()
                     }
                 }
                 Spacer()
             }
             else {
                 Spacer()
+                // no forecast error message
                 Text(errorMessage)
                     .font(.title2)
                     .shadow(color: .black, radius: 0.5)

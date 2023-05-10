@@ -31,13 +31,14 @@ struct Overview : Codable {
     let aqi: Int
 }
 
+// MARK: - Pollutants
 struct Pollutants  : Codable {
     let carbonOxide: Double
     let nitrogenOxide: Double
     let nitrogenDioxide: Double
     let ozone: Double
     let sulfurDioxide: Double
-    let pm2poin5: Double
+    let pm2point5: Double
     let pm10: Double
     let ammonia: Double
     
@@ -47,8 +48,8 @@ struct Pollutants  : Codable {
         case nitrogenDioxide = "no2"
         case ozone = "o3"
         case sulfurDioxide = "so2"
-        case pm2poin5 = "pm2_5"
-        case pm10 = "pm10"
+        case pm2point5 = "pm2_5"
+        case pm10
         case ammonia = "nh3"
     }
 }

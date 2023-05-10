@@ -36,6 +36,7 @@ struct Home: View {
                 SearchView(isSearchOpen: $isSearchOpen)
             }
             
+            // selected location
             Text(modelData.userLocation)
                 .font(.title)
                 .shadow(color: .black, radius: 0.5)
@@ -79,6 +80,7 @@ struct Home: View {
                     // icon and description
                     if hasWeather {
                         HStack {
+                            // weather icon fetched asyncronously
                             AsyncImage(url: URL(string: String(format: mediumImageURL, weather!.icon))){ content in
                                 switch content {
                                 case .empty:
@@ -95,6 +97,7 @@ struct Home: View {
                                     EmptyView()
                                 }
                             }
+                            // weather description
                             Text(weather!.weatherDescription.capitalized)
                                 .padding(.vertical)
                                 .font(.body)
@@ -106,6 +109,7 @@ struct Home: View {
             }
             else {
                 Spacer()
+                // no forecast error message
                 Text(errorMessage)
                     .font(.title2)
                     .shadow(color: .black, radius: 0.5)

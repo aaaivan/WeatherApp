@@ -15,6 +15,7 @@ struct ForecastView: View {
     var body: some View {
         
         VStack{
+            // selected location
             Text(modelData.userLocation)
                 .font(.title)
                 .shadow(color: .black, radius: 0.5)
@@ -34,6 +35,7 @@ struct ForecastView: View {
             }
             else {
                 Spacer()
+                // no forecast error message
                 Text(errorMessage)
                     .font(.title2)
                     .shadow(color: .black, radius: 0.5)

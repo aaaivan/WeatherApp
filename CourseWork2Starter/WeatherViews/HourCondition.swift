@@ -25,6 +25,7 @@ struct HourCondition: View {
             .frame(width: 60)
             
             if hasWeather {
+                // weather icon fetched asyncronously
                 AsyncImage(url: URL(string: String(format: mediumImageURL, weather!.icon))){ content in
                     switch content {
                     case .empty:
@@ -50,6 +51,7 @@ struct HourCondition: View {
             Spacer()
             
             if hasWeather {
+                // weather description
                 Text(weather!.weatherDescription.capitalized)
                     .font(.body)
                     .multilineTextAlignment(.trailing)

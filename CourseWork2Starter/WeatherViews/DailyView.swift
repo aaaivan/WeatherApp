@@ -12,13 +12,13 @@ struct DailyView: View {
     
     let mediumImageURL: String = "https://openweathermap.org/img/wn/%1$@@2x.png"
     let temperatureString = "%dºC / %dºC"
-    let errorMessage = "Someth🌪️ng went wrong!"
    
     var body: some View {
         let hasWeather : Bool = !day.weather.isEmpty
         let weather = hasWeather ? day.weather[0] : nil
         
         HStack {
+            // weather icon fetched asyncronously
             if hasWeather {
                 AsyncImage(url: URL(string: String(format: mediumImageURL, weather!.icon))){ content in
                     switch content {
@@ -40,10 +40,12 @@ struct DailyView: View {
             
             VStack(alignment: .leading){
                 if hasWeather {
+                    // weather description
                     Text(weather!.weatherDescription.capitalized)
                         .font(.body)
                         .multilineTextAlignment(.leading)
                 }
+                // date
                 Text(Date(timeIntervalSince1970: TimeInterval(((Int)(day.dt))))
                     .formatted(.dateTime.day(.twoDigits).weekday(.wide)))
                 .font(.body)
@@ -59,10 +61,3 @@ struct DailyView: View {
     
 }
 
-struct DailyView_Previews: PreviewProvider {
-    static var day = ModelData().forecast!.daily
-    
-    static var previews: some View {
-        DailyView(day: day[0])
-    }
-}

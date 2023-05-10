@@ -18,17 +18,19 @@ struct PollutionView: View {
     let percievedTempString = "Feels Like: %dºC"
     let errorMessage = "Someth🌪️ng went wrong!"
     let airQualityHeading = "Air Quality Data:"
+    let pollutantConcString = "(Concentrations in µg/m³)"
     let pollutionErrorMessage = "No pollution data"
 
     var body: some View {
         VStack{
+            // selected location string
             Text(modelData.userLocation)
                 .font(.title)
                 .shadow(color: .black, radius: 0.5)
                 .multilineTextAlignment(.center)
                 .padding(.top, 50)
 
-            // Screen content: to be displayed only if the forecast is available
+            // Screen content: to be displayed only if the forecast is available.
             // If the forecast is not available display error message
             if let forecast = modelData.forecast {
                 let hasWeather : Bool = !forecast.current.weather.isEmpty
@@ -36,14 +38,14 @@ struct PollutionView: View {
                 let weather = hasWeather ? forecast.current.weather[0] : nil
                 let dayDetails = hasDaily ? forecast.daily[0] : nil
                 
-                // temperature section
+                // temperature and weather section
                 VStack {
                     // temperature
                     Text(String(format: temperatureString, (Int)(round(forecast.current.temp))))
                         .font(.largeTitle)
                         .shadow(color: .black, radius: 1)
                     
-                    // icon and description
+                    // icon and weather description
                     if hasWeather {
                         HStack {
                             AsyncImage(url: URL(string: String(format: mediumImageURL, weather!.icon))){ content in
@@ -99,6 +101,7 @@ struct PollutionView: View {
                 .padding(.top, 40)
                 Spacer()
 
+                // air quality section
                 VStack {
                     Text(airQualityHeading)
                         .font(.largeTitle)
@@ -110,7 +113,9 @@ struct PollutionView: View {
                         let pollution = hasPollution ? pollutionList.list[0] : nil
                         
                         if hasPollution {
+                            // pollutants in a horizontal line
                             HStack {
+                                // sulfur dioxide
                                 VStack {
                                     Image("so2")
                                         .resizable()
@@ -122,6 +127,7 @@ struct PollutionView: View {
                                 }
                                 Spacer()
                                 
+                                // nitrogen oxides
                                 VStack {
                                     Image("no")
                                         .resizable()
@@ -134,6 +140,7 @@ struct PollutionView: View {
                                 }
                                 Spacer()
 
+                                // carbon monoxide
                                 VStack {
                                     Image("voc")
                                         .resizable()
@@ -145,19 +152,26 @@ struct PollutionView: View {
                                 }
                                 Spacer()
 
+                                // particulate
                                 VStack {
                                     Image("pm")
                                         .resizable()
                                         .frame(width: 60, height: 60)
                                         .shadow(color: .black, radius: 2)
-                                    Text(String(format: "%.2f", pollution!.components.sulfurDioxide))
+                                    Text(String(format: "%.2f", pollution!.components.pm2point5))
                                         .font(.body)
                                         .shadow(color: .black, radius: 0.5)
                                 }
                             }
                             .padding(.all)
+                            
+                            Text(pollutantConcString)
+                                .font(.footnote)
+                                .shadow(color: .black, radius: 0.5)
+                                .padding(.all)
                         }
                         else {
+                            // no pollution data error
                             Text(pollutionErrorMessage)
                                 .font(.title2)
                                 .shadow(color: .black, radius: 0.5)
@@ -165,6 +179,7 @@ struct PollutionView: View {
                         }
                     }
                     else {
+                        // no forecast data error
                         Text(pollutionErrorMessage)
                             .font(.title2)
                             .shadow(color: .black, radius: 0.5)
@@ -176,6 +191,7 @@ struct PollutionView: View {
             }
             else {
                 Spacer()
+                // no forecast error message
                 Text(errorMessage)
                     .font(.title2)
                     .shadow(color: .black, radius: 0.5)
