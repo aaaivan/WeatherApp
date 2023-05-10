@@ -40,7 +40,7 @@ struct DailyView: View {
             
             VStack(alignment: .leading){
                 if hasWeather {
-                    Text(weather!.weatherDescription.rawValue.capitalized)
+                    Text(weather!.weatherDescription.capitalized)
                         .font(.body)
                         .multilineTextAlignment(.leading)
                 }

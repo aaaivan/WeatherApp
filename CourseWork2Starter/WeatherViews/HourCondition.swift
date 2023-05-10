@@ -50,7 +50,7 @@ struct HourCondition: View {
             Spacer()
             
             if hasWeather {
-                Text(weather!.weatherDescription.rawValue.capitalized)
+                Text(weather!.weatherDescription.capitalized)
                     .font(.body)
                     .multilineTextAlignment(.trailing)
             }

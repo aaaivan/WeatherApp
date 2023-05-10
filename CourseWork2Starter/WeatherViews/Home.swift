@@ -95,7 +95,7 @@ struct Home: View {
                                     EmptyView()
                                 }
                             }
-                            Text(weather!.weatherDescription.rawValue.capitalized)
+                            Text(weather!.weatherDescription.capitalized)
                                 .padding(.vertical)
                                 .font(.body)
                                 .shadow(color: .black, radius: 0.5)

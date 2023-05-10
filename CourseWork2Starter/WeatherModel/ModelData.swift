@@ -1,30 +1,30 @@
 import Foundation
+
 class ModelData: ObservableObject {
     @Published var forecast: Forecast?
     @Published var userLocation: String = "No location"
+    let apiURL = "https://api.openweathermap.org/data/3.0/onecall?lat=%f&lon=%f&units=metric&appid=70b5348ce1afed7a929a9b23eec7ce2a"
     
     init() {
         self.forecast = load("london.json")
     }
     
-    
-
-    func loadData(lat: Double, lon: Double) async throws -> Forecast {
-        let url = URL(string: "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&units=metric&appid=YOUR API KEY HERE")
+    func loadData(lat: Double, lon: Double) async {
+        let url = URL(string: String(format: apiURL, lat, lon))
         let session = URLSession(configuration: .default)
         
-        let (data, _) = try await session.data(from: url!)
-        
         do {
-            //print(data)
+            let (data, _) = try await session.data(from: url!)
+            print(String(decoding: data, as: UTF8.self))
             let forecastData = try JSONDecoder().decode(Forecast.self, from: data)
             DispatchQueue.main.async {
                 self.forecast = forecastData
             }
-            
-            return forecastData
         } catch {
-            throw error
+            print(error.localizedDescription.debugDescription)
+            DispatchQueue.main.async {
+                self.forecast = nil
+            }
         }
     }
     

@@ -7,39 +7,30 @@
 
 import Foundation
 
-let jsonTest = """
-    {
-      "coord":[
-        50,
-        50
-      ],
-      "list":[
-        {
-          "dt":1605182400,
-          "main":{
-            "aqi":1
-          },
-          "components":{
-            "co":201.94053649902344,
-            "no":0.01877197064459324,
-            "no2":0.7711350917816162,
-            "o3":68.66455078125,
-            "so2":0.6407499313354492,
-            "pm2_5":0.5,
-            "pm10":0.540438711643219,
-            "nh3":0.12369127571582794
-          }
-        }
-      ]
-    }
-""".data(using: .utf8)
-
-
 class PollutionModel : ObservableObject {
     @Published var pollutionData: PollutionData?
+    let apiURL = "https://api.openweathermap.org/data/2.5/air_pollution?lat=%f&lon=%f&appid=70b5348ce1afed7a929a9b23eec7ce2a"
     
     init() {
-        let decoder = JSONDecoder()
-        self.pollutionData = try? decoder.decode(PollutionData.self, from: jsonTest!)
+        self.pollutionData = nil
+    }
+    
+    func loadData(lat: Double, lon: Double) async {
+        let url = URL(string: String(format: apiURL, lat, lon))
+        let session = URLSession(configuration: .default)
+        
+        do {
+            let (data, _) = try await session.data(from: url!)
+            // print(String(decoding: data, as: UTF8.self))
+            let pollutionData = try JSONDecoder().decode(PollutionData.self, from: data)
+            DispatchQueue.main.async {
+                self.pollutionData = pollutionData
+            }
+        } catch {
+            print(error.localizedDescription.debugDescription)
+            DispatchQueue.main.async {
+                self.pollutionData = nil
+            }
+        }
     }
 }

@@ -63,7 +63,7 @@ struct CurrentWeatherView: View {
                                     EmptyView()
                                 }
                             }
-                            Text(weather!.weatherDescription.rawValue.capitalized)
+                            Text(weather!.weatherDescription.capitalized)
                                 .padding()
                                 .font(.body)
                                 .shadow(color: .black, radius: 0.5)

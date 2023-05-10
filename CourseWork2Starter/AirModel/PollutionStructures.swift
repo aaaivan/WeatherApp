@@ -7,17 +7,23 @@
 
 import Foundation
 
-// MARK: - Welcome
+// MARK: - PollutionData
 struct PollutionData : Codable {
-    let coord: [Int]
+    let coord: Coordinates
     let list: [PollutionEntry]
+}
+
+// MARK: - Coordinates
+struct Coordinates : Codable {
+    let lon: Double
+    let lat: Double
 }
 
 // MARK: - PollutionEntry
 struct PollutionEntry : Codable {
-    let dt: Int
     let main: Overview
     let components: Pollutants
+    let dt: Int
 }
 
 // MARK: - Overview
