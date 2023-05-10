@@ -46,13 +46,11 @@ struct SearchView: View {
                         }
                     }//GEOCorder
                 }
-                .padding(10)
-                .shadow(color: .blue, radius: 10)
-                .cornerRadius(10)
-                .fixedSize()
-                .font(.custom("Ariel", size: 26))
+                .font(.custom("Ariel", size: 24))
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .cornerRadius(15) // TextField
+                .cornerRadius(10) // TextField
+                .shadow(color: .blue, radius: 10)
+                .padding(10)
             
             // invalid location message
             Text(invalidLocationFlag ? invalidLocationText : " ")
